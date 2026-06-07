@@ -1011,3 +1011,46 @@ section {
     scroll-margin-top: 100px;
   }
 }
+.header {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  transform: translateY(0);
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+.header-hidden {
+  transform: translateY(-130%);
+}
+
+main {
+  padding-top: 96px;
+}
+
+section {
+  scroll-margin-top: 120px;
+}
+
+@media (max-width: 1200px) {
+  main {
+    padding-top: 90px;
+  }
+
+  section {
+    scroll-margin-top: 110px;
+  }
+}
+
+@media (max-width: 768px) {
+  main {
+    padding-top: 78px;
+  }
+
+  section {
+    scroll-margin-top: 100px;
+  }
+}

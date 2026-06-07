@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import "./App.css";
 
 const stats = [
@@ -65,6 +65,37 @@ const prices = [
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+
+    function handleScroll() {
+      const currentScrollY = window.scrollY;
+
+      if (isMenuOpen) {
+        setIsHeaderVisible(true);
+        lastScrollY = currentScrollY;
+        return;
+      }
+
+      if (currentScrollY < 40) {
+        setIsHeaderVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 120) {
+        setIsHeaderVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        setIsHeaderVisible(true);
+      }
+
+      lastScrollY = currentScrollY;
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isMenuOpen]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -77,7 +108,7 @@ function App() {
 
   return (
     <div className="site">
-      <header className="header">
+      <header className={isHeaderVisible ? "header" : "header header-hidden"}>
         <a href="#" className="logo" onClick={closeMenu}>
           Компас
         </a>
@@ -86,7 +117,7 @@ function App() {
           className="menu-button"
           type="button"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Открыть меню"
+          aria-label={isMenuOpen ? "Закрыть меню" : "Открыть меню"}
         >
           {isMenuOpen ? "×" : "☰"}
         </button>
@@ -109,7 +140,7 @@ function App() {
           </a>
         </nav>
 
-        <a href="#contacts" className="button header-button">
+        <a href="#contacts" className="button header-button" onClick={closeMenu}>
           Оставить заявку
         </a>
       </header>
@@ -281,7 +312,6 @@ function App() {
 
             <button type="submit">Отправить заявку</button>
           </form>
-
         </section>
       </main>
 
