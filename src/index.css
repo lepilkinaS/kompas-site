@@ -1,0 +1,22 @@
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #1e1e1e;
+  background: #ffffff;
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background: #ffffff !important;
+  color: #1e1e1e;
+  color-scheme: light;
+}
+
+body {
+  overflow-x: hidden;
+}
